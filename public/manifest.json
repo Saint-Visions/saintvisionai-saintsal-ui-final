@@ -1,0 +1,28 @@
+{
+  "short_name": "SaintSal™",
+  "name": "SaintSal™ — Cookin' Knowledge",
+  "description": "The embedded AI system for dynamic support, intelligent ops, and real-time insights",
+  "icons": [
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/d83998c6a81f466db4fb83ab90c7ba25/favicon-192x192-5218fa?format=webp&width=192",
+      "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/d83998c6a81f466db4fb83ab90c7ba25/favicon-256x256-8484bf?format=webp&width=256",
+      "type": "image/webp",
+      "sizes": "256x256"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/d83998c6a81f466db4fb83ab90c7ba25/favicon-512x512-0722ac?format=webp&width=512",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#D4AF37",
+  "background_color": "#000000",
+  "orientation": "portrait-primary"
+}
