@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 // TODO: Separate into multiple contexts, keeping simple for now
 
 "use client"

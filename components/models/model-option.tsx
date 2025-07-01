@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { LLM } from "@/types"
 import { FC } from "react"
 import { ModelIcon } from "./model-icon"

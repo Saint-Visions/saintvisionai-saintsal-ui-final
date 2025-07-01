@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import initTranslations from "@/lib/i18n"
 import { createInstance } from "i18next"

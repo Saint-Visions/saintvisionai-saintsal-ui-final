@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ModelIcon } from "@/components/models/model-icon"
 import { ChatSettingsForm } from "@/components/ui/chat-settings-form"
 import { Input } from "@/components/ui/input"

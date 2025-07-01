@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { createAssistants } from "@/db/assistants"
 import { createChats } from "@/db/chats"

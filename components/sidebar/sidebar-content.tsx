@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataListType } from "@/types"
 import { FC, useState } from "react"

@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { IconMessage } from "@tabler/icons-react"
 import { FC, useState } from "react"
 import {

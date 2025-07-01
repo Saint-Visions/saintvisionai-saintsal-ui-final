@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatSettingsForm } from "@/components/ui/chat-settings-form"
 import ImagePicker from "@/components/ui/image-picker"
 import { Input } from "@/components/ui/input"
@@ -120,7 +122,15 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
           />
         ) : (
           <IconRobotFace
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
             className="bg-primary text-secondary border-primary rounded border-DEFAULT p-1"
+=======
+            className="border-primary bg-primary text-secondary rounded border-DEFAULT p-1"
+>>>>>>> Stashed changes
+=======
+            className="border-primary bg-primary text-secondary rounded border-DEFAULT p-1"
+>>>>>>> Stashed changes
             size={30}
           />
         )

@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import { ChatbotUIContext } from "@/context/context"
 import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
@@ -54,7 +56,15 @@ export const ChatSettingsForm: FC<ChatSettingsFormProps> = ({
         <Label>Prompt</Label>
 
         <TextareaAutosize
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
           className="bg-background border-input border-2"
+=======
+          className="border-input bg-background border-2"
+>>>>>>> Stashed changes
+=======
+          className="border-input bg-background border-2"
+>>>>>>> Stashed changes
           placeholder="You are a helpful AI assistant."
           onValueChange={prompt => {
             onChangeChatSettings({ ...chatSettings, prompt })

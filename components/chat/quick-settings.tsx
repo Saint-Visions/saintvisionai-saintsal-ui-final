@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { getAssistantCollectionsByAssistantId } from "@/db/assistant-collections"
 import { getAssistantFilesByAssistantId } from "@/db/assistant-files"
@@ -211,7 +213,15 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
               />
             ) : (
               <IconRobotFace
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 className="bg-primary text-secondary border-primary rounded border-DEFAULT p-1"
+=======
+                className="border-primary bg-primary text-secondary rounded border-DEFAULT p-1"
+>>>>>>> Stashed changes
+=======
+                className="border-primary bg-primary text-secondary rounded border-DEFAULT p-1"
+>>>>>>> Stashed changes
                 size={28}
               />
             ))}

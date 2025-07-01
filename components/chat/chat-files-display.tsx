@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { getFileFromStorage } from "@/db/storage/files"
 import useHotkey from "@/lib/hooks/use-hotkey"
@@ -141,7 +143,15 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
                 />
 
                 <IconX
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   className="bg-muted-foreground border-primary absolute right-[-6px] top-[-2px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+=======
+                  className="border-primary bg-muted-foreground absolute right-[-6px] top-[-2px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+>>>>>>> Stashed changes
+=======
+                  className="border-primary bg-muted-foreground absolute right-[-6px] top-[-2px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+>>>>>>> Stashed changes
                   onClick={e => {
                     e.stopPropagation()
                     setNewMessageImages(
@@ -208,7 +218,15 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
                   </div>
 
                   <IconX
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     className="bg-muted-foreground border-primary absolute right-[-6px] top-[-6px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+=======
+                    className="border-primary bg-muted-foreground absolute right-[-6px] top-[-6px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+>>>>>>> Stashed changes
+=======
+                    className="border-primary bg-muted-foreground absolute right-[-6px] top-[-6px] flex size-5 cursor-pointer items-center justify-center rounded-full border-DEFAULT text-[10px] hover:border-red-500 hover:bg-white hover:text-red-500"
+>>>>>>> Stashed changes
                     onClick={e => {
                       e.stopPropagation()
                       setNewMessageFiles(

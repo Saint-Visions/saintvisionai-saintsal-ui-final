@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { MessageImage } from "@/types"
 import { FC, MouseEvent, useContext, useEffect, useRef, useState } from "react"

@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { Tables } from "@/supabase/types"
 import { IconBooks } from "@tabler/icons-react"

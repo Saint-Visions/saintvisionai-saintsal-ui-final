@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { IconInfoCircle, IconMessagePlus } from "@tabler/icons-react"

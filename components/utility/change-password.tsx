@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import { supabase } from "@/lib/supabase/browser-client"
 import { useRouter } from "next/navigation"

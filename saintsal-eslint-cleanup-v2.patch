@@ -1,0 +1,62 @@
+
+diff --git a/components/mobile/mobile-app-wrapper.tsx b/components/mobile/mobile-app-wrapper.tsx
+index abcdef1..1234567 100644
+--- a/components/mobile/mobile-app-wrapper.tsx
++++ b/components/mobile/mobile-app-wrapper.tsx
+@@ -22,7 +22,7 @@
+-}, [])
++}, [initializeMobileApp])
+
+diff --git a/components/utility/announcements.tsx b/components/utility/announcements.tsx
+index abcdef2..1234568 100644
+--- a/components/utility/announcements.tsx
++++ b/components/utility/announcements.tsx
+@@ -53,7 +53,7 @@
+-}, [])
++}, [announcements])
+
+diff --git a/components/utility/global-state.tsx b/components/utility/global-state.tsx
+index abcdef3..1234569 100644
+--- a/components/utility/global-state.tsx
++++ b/components/utility/global-state.tsx
+@@ -153,7 +153,7 @@
+-}, [])
++}, [fetchStartingData])
+
+diff --git a/components/utility/profile-settings.tsx b/components/utility/profile-settings.tsx
+index abcdef4..123456a 100644
+--- a/components/utility/profile-settings.tsx
++++ b/components/utility/profile-settings.tsx
+@@ -244,7 +244,9 @@
+-const someCallback = useCallback(() => {
++const someCallback = useCallback(() => {
++  // TODO: Add specific dependencies here
++}, [])
+
+diff --git a/components/ui/alert-dialog.tsx b/components/ui/alert-dialog.tsx
+index abcdef5..123456b 100644
+--- a/components/ui/alert-dialog.tsx
++++ b/components/ui/alert-dialog.tsx
+@@ -38,7 +38,11 @@
+- left-[50%]
++ left-1/2
+- top-[50%]
++ top-1/2
+- translate-x-[-50%]
++ -translate-x-1/2
+- translate-y-[-50%]
++ -translate-y-1/2
+
+diff --git a/components/ui/dialog.tsx b/components/ui/dialog.tsx
+index abcdef6..123456c 100644
+--- a/components/ui/dialog.tsx
++++ b/components/ui/dialog.tsx
+@@ -39,7 +39,11 @@
+- left-[50%]
++ left-1/2
+- top-[50%]
++ top-1/2
+- translate-x-[-50%]
++ -translate-x-1/2
+- translate-y-[-50%]
++ -translate-y-1/2

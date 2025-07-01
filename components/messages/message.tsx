@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { LLM_LIST } from "@/lib/models/llm/llm-list"
@@ -247,10 +249,10 @@ export const Message: FC<MessageProps> = ({
                   alt="user image"
                 />
               ) : (
-                <IconMoodSmile
-                  className="bg-primary text-secondary border-primary rounded border-DEFAULT p-1"
-                  size={ICON_SIZE}
-                />
+<IconMoodSmile
+  className="border-primary bg-primary text-secondary rounded border-DEFAULT p-1"
+  size={ICON_SIZE}
+/>
               )}
 
               <div className="font-semibold">

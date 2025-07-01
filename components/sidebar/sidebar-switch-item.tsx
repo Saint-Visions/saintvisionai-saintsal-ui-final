@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ContentType } from "@/types"
 import { FC } from "react"
 import { TabsTrigger } from "../ui/tabs"

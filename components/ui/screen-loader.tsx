@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { IconLoader2 } from "@tabler/icons-react"
 import { FC } from "react"
 

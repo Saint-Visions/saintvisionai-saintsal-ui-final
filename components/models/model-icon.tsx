@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { cn } from "@/lib/utils"
 import mistral from "@/public/providers/mistral.png"
 import groq from "@/public/providers/groq.png"

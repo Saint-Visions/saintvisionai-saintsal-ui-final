@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { LLM, LLMID, ModelProvider } from "@/types"
 import { IconCheck, IconChevronDown } from "@tabler/icons-react"

@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import {
   IconBrandGithub,

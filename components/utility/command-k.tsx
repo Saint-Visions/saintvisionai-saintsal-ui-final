@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { IconLoader2, IconSend } from "@tabler/icons-react"
@@ -58,7 +60,15 @@ export const CommandK: FC<CommandKProps> = ({}) => {
 
               <div className="border-input relative flex min-h-[50px] w-full items-center justify-center rounded-xl border-2">
                 <TextareaAutosize
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-3 py-2 pr-14 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+=======
+                  className="text-md ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex w-full resize-none rounded-md border-none bg-transparent px-3 py-2 pr-14 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> Stashed changes
+=======
+                  className="text-md ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex w-full resize-none rounded-md border-none bg-transparent px-3 py-2 pr-14 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+>>>>>>> Stashed changes
                   placeholder="create a prompt for writing sql code"
                   value={value}
                   onValueChange={setValue}

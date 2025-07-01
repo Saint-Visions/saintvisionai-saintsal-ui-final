@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import {
@@ -80,7 +82,7 @@ import {
 import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import { Tables, TablesUpdate } from "@/supabase/types"
 import { CollectionFile, ContentType, DataItemType } from "@/types"
-import { FC, useContext, useEffect, useRef, useState } from "react"
+import { FC, useContext, useEffect, useRef, useState, useMemo } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { toast } from "sonner"
 import { SidebarDeleteItem } from "./sidebar-delete-item"
@@ -115,7 +117,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     setModels,
     setAssistantImages
   } = useContext(ChatbotUIContext)
-
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -152,6 +153,40 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     Tables<"tools">[]
   >([])
 
+  // Removed duplicate fetchSelectedWorkspaces declaration to fix redeclaration error
+
+  const fetchDataFunctions = useMemo(() => ({
+    chats: null,
+    presets: null,
+    prompts: null,
+    files: null,
+    collections: async (collectionId: string) => {
+      const collectionFiles =
+        await getCollectionFilesByCollectionId(collectionId)
+      setStartingCollectionFiles(collectionFiles.files)
+      setSelectedCollectionFiles([])
+    },
+    assistants: async (assistantId: string) => {
+      const assistantFiles = await getAssistantFilesByAssistantId(assistantId)
+      setStartingAssistantFiles(assistantFiles.files)
+
+      const assistantCollections =
+        await getAssistantCollectionsByAssistantId(assistantId)
+      setStartingAssistantCollections(assistantCollections.collections)
+
+      const assistantTools = await getAssistantToolsByAssistantId(assistantId)
+      setStartingAssistantTools(assistantTools.tools)
+
+      setSelectedAssistantFiles([])
+      setSelectedAssistantCollections([])
+      setSelectedAssistantTools([])
+    },
+    tools: null,
+    models: null
+  }), [])
+
+  // Removed duplicate fetchSelectedWorkspaces declaration to fix redeclaration error
+
   useEffect(() => {
     if (isOpen) {
       const fetchData = async () => {
@@ -168,7 +203,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
 
       fetchData()
     }
-  }, [isOpen])
+  }, [contentType, fetchDataFunctions, fetchSelectedWorkspaces, isOpen, item.id, workspaces.length])
 
   const renderState = {
     chats: null,
@@ -194,36 +229,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
       setSelectedAssistantCollections,
       selectedAssistantTools,
       setSelectedAssistantTools
-    },
-    tools: null,
-    models: null
-  }
-
-  const fetchDataFunctions = {
-    chats: null,
-    presets: null,
-    prompts: null,
-    files: null,
-    collections: async (collectionId: string) => {
-      const collectionFiles =
-        await getCollectionFilesByCollectionId(collectionId)
-      setStartingCollectionFiles(collectionFiles.files)
-      setSelectedCollectionFiles([])
-    },
-    assistants: async (assistantId: string) => {
-      const assistantFiles = await getAssistantFilesByAssistantId(assistantId)
-      setStartingAssistantFiles(assistantFiles.files)
-
-      const assistantCollections =
-        await getAssistantCollectionsByAssistantId(assistantId)
-      setStartingAssistantCollections(assistantCollections.collections)
-
-      const assistantTools = await getAssistantToolsByAssistantId(assistantId)
-      setStartingAssistantTools(assistantTools.tools)
-
-      setSelectedAssistantFiles([])
-      setSelectedAssistantCollections([])
-      setSelectedAssistantTools([])
     },
     tools: null,
     models: null

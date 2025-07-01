@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
 import {
@@ -102,10 +104,18 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <PopoverTrigger
         className="border-input flex h-[36px]
         w-full cursor-pointer items-center justify-between rounded-md border px-2 py-1 hover:opacity-50"
       >
+=======
+      <PopoverTrigger className="border-input flex h-[36px] w-full cursor-pointer items-center justify-between rounded-md border px-2 py-1 hover:opacity-50">
+>>>>>>> Stashed changes
+=======
+      <PopoverTrigger className="border-input flex h-[36px] w-full cursor-pointer items-center justify-between rounded-md border px-2 py-1 hover:opacity-50">
+>>>>>>> Stashed changes
         <div className="flex items-center truncate">
           {selectedWorkspace && (
             <div className="flex items-center">

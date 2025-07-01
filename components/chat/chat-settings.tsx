@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { ChatbotUIContext } from "@/context/context"
 import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
 import useHotkey from "@/lib/hooks/use-hotkey"
@@ -81,7 +83,15 @@ export const ChatSettings: FC<ChatSettingsProps> = ({}) => {
       </PopoverTrigger>
 
       <PopoverContent
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         className="bg-background border-input relative flex max-h-[calc(100vh-60px)] w-[300px] flex-col space-y-4 overflow-auto rounded-lg border-2 p-6 sm:w-[350px] md:w-[400px] lg:w-[500px] dark:border-none"
+=======
+        className="border-input bg-background relative flex max-h-[calc(100vh-60px)] w-[300px] flex-col space-y-4 overflow-auto rounded-lg border-2 p-6 sm:w-[350px] md:w-[400px] lg:w-[500px] dark:border-none"
+>>>>>>> Stashed changes
+=======
+        className="border-input bg-background relative flex max-h-[calc(100vh-60px)] w-[300px] flex-col space-y-4 overflow-auto rounded-lg border-2 p-6 sm:w-[350px] md:w-[400px] lg:w-[500px] dark:border-none"
+>>>>>>> Stashed changes
         align="end"
       >
         <ChatSettingsForm

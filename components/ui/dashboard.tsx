@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import { Sidebar } from "@/components/sidebar/sidebar"
 import { SidebarSwitcher } from "@/components/sidebar/sidebar-switcher"

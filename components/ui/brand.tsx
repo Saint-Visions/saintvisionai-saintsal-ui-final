@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+"use client"
 
 import Link from "next/link"
 import { FC } from "react"
