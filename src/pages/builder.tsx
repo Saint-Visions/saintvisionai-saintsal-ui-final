@@ -1,3 +1,15 @@
+import { BuilderComponent, builder } from "@builder.io/react";
+import React from "react";
+
+builder.init(import.meta.env.VITE_BUILDER_API_KEY);
+
+export default function Page() {
+  return (
+    <div>
+      <BuilderComponent model="page" />
+    </div>
+  );
+}
 export default function Page() { return (import { BuilderComponent, builder } from "@builder.io/react";
 
 builder.init(import.meta.env.VITE_BUILDER_API_KEY);
