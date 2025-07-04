@@ -1,433 +1,417 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import {
-  EmpireContainer,
-  EmpireSection,
-  EmpireGrid,
   EmpireCard,
   EmpireButton,
   EmpireBadge,
-  EmpireHero,
+  EmpireGrid,
+  EmpireSection,
   EmpireStats,
-  Dashboard,
-  StatusPanel
+  EmpireContainer,
+  PreferenceDropdown
 } from "../components"
-// Import performance engine with fallback
-let empirePerformance: any, empireTheme: any, empireComponentFactory: any
-try {
-  const perfEngine = await import("../lib/empire-performance-engine")
-  empirePerformance = perfEngine.empirePerformance
-  const themeEngine = await import("../lib/empire-theme-engine")
-  empireTheme = themeEngine.empireTheme
-  const compFactory = await import("../lib/empire-component-factory")
-  empireComponentFactory = compFactory.empireComponentFactory
-} catch (e) {
-  console.warn("Empire engines not loaded yet")
+
+interface AnalyticsMetric {
+  label: string
+  value: string
+  change: number
+  trend: "up" | "down" | "stable"
+  period: string
 }
 
-interface PerformanceMetric {
-  id: string
+interface ChartData {
   name: string
   value: number
-  unit: string
-  timestamp: number
-  category: string
-  threshold?: { warning: number; critical: number }
-}
-
-interface PerformanceProfile {
-  id: string
-  name: string
-  score: number
-  metrics: PerformanceMetric[]
-  recommendations: string[]
-  timestamp: number
+  change: number
 }
 
 export default function EmpireAnalytics() {
-  const [metrics, setMetrics] = useState<Record<string, PerformanceMetric>>({})
-  const [profiles, setProfiles] = useState<PerformanceProfile[]>([])
-  const [currentProfile, setCurrentProfile] =
-    useState<PerformanceProfile | null>(null)
-  const [isMonitoring, setIsMonitoring] = useState(false)
-  const [systemHealth, setSystemHealth] = useState<
-    "excellent" | "good" | "warning" | "critical"
-  >("excellent")
+  const [selectedTimeframe, setSelectedTimeframe] = useState("7d")
+  const [selectedMetric, setSelectedMetric] = useState("performance")
 
-  useEffect(() => {
-    // Load initial data
-    loadAnalyticsData()
+  const timeframeOptions = [
+    { value: "1d", label: "Last 24 Hours" },
+    { value: "7d", label: "Last 7 Days" },
+    { value: "30d", label: "Last 30 Days" },
+    { value: "90d", label: "Last 90 Days" }
+  ]
 
-    // Set up real-time updates
-    const interval = setInterval(loadAnalyticsData, 5000)
+  const metricOptions = [
+    { value: "performance", label: "Performance Metrics" },
+    { value: "usage", label: "Usage Analytics" },
+    { value: "errors", label: "Error Analysis" },
+    { value: "users", label: "User Behavior" }
+  ]
 
-    // Listen for performance alerts
-    const handleAlert = (event: any) => {
-      const { level, metric } = event.detail
-      console.log(`Performance Alert [${level}]:`, metric)
-      updateSystemHealth(level)
+  const overviewStats = [
+    {
+      value: "98.7%",
+      label: "System Performance",
+      description: "Average performance score"
+    },
+    {
+      value: "156ms",
+      label: "Response Time",
+      description: "Average API response time"
+    },
+    {
+      value: "99.9%",
+      label: "Uptime",
+      description: "System availability"
+    },
+    {
+      value: "2.4M",
+      label: "Requests",
+      description: "Total API requests"
     }
+  ]
 
-    window.addEventListener("empire-performance-alert", handleAlert)
-
-    return () => {
-      clearInterval(interval)
-      window.removeEventListener("empire-performance-alert", handleAlert)
+  const analyticsMetrics: AnalyticsMetric[] = [
+    {
+      label: "AI Processing Speed",
+      value: "847ms",
+      change: -12,
+      trend: "down",
+      period: "vs last week"
+    },
+    {
+      label: "User Engagement",
+      value: "94.2%",
+      change: 8,
+      trend: "up",
+      period: "vs last month"
+    },
+    {
+      label: "Error Rate",
+      value: "0.03%",
+      change: -0.01,
+      trend: "down",
+      period: "vs last week"
+    },
+    {
+      label: "Component Usage",
+      value: "15.7K",
+      change: 23,
+      trend: "up",
+      period: "vs last month"
+    },
+    {
+      label: "Builder.io Integration",
+      value: "99.1%",
+      change: 2,
+      trend: "up",
+      period: "success rate"
+    },
+    {
+      label: "Memory Usage",
+      value: "67.3%",
+      change: -5,
+      trend: "down",
+      period: "vs last week"
     }
-  }, [])
+  ]
 
-  const loadAnalyticsData = () => {
-    if (empirePerformance) {
-      setMetrics(empirePerformance.getLatestMetrics?.() || {})
-      setProfiles(empirePerformance.getProfiles?.() || [])
-    }
-  }
+  const topComponents: ChartData[] = [
+    { name: "EmpireButton", value: 3420, change: 12 },
+    { name: "EmpireCard", value: 2890, change: 8 },
+    { name: "EmpireGrid", value: 2156, change: -3 },
+    { name: "EmpireHero", value: 1834, change: 15 },
+    { name: "EmpireStats", value: 1567, change: 22 }
+  ]
 
-  const generateNewProfile = () => {
-    if (empirePerformance?.generateProfile) {
-      const profile = empirePerformance.generateProfile()
-      setCurrentProfile(profile)
-      setProfiles(empirePerformance.getProfiles?.() || [])
-    }
-  }
+  const userBehavior = [
+    { action: "Component Interactions", count: "45.2K", percentage: 68 },
+    { action: "Page Views", count: "23.8K", percentage: 36 },
+    { action: "AI Queries", count: "12.4K", percentage: 19 },
+    { action: "Builder.io Sessions", count: "8.9K", percentage: 13 }
+  ]
 
-  const toggleMonitoring = () => {
-    if (isMonitoring) {
-      empirePerformance?.stopMonitoring?.()
-      setIsMonitoring(false)
-    } else {
-      empirePerformance?.startMonitoring?.()
-      setIsMonitoring(true)
-    }
-  }
-
-  const updateSystemHealth = (alertLevel: string) => {
-    if (alertLevel === "critical") setSystemHealth("critical")
-    else if (alertLevel === "warning" && systemHealth !== "critical")
-      setSystemHealth("warning")
-  }
-
-  const getHealthColor = () => {
-    switch (systemHealth) {
-      case "excellent":
-        return "success"
-      case "good":
-        return "success"
-      case "warning":
-        return "warning"
-      case "critical":
-        return "error"
+  const getTrendColor = (trend: string) => {
+    switch (trend) {
+      case "up":
+        return "text-green-400"
+      case "down":
+        return "text-red-400"
       default:
-        return "info"
+        return "text-gray-400"
     }
   }
 
-  const getCoreMetrics = () => {
-    return [
-      {
-        label: "Page Load Time",
-        value: metrics["page-load-time"]?.value
-          ? `${Math.round(metrics["page-load-time"].value)}ms`
-          : "N/A",
-        trend:
-          metrics["page-load-time"]?.value < 3000
-            ? ("stable" as const)
-            : ("up" as const)
-      },
-      {
-        label: "Memory Usage",
-        value: metrics["memory-used"]?.value
-          ? `${Math.round(metrics["memory-used"].value)}MB`
-          : "N/A",
-        trend:
-          metrics["memory-used"]?.value < 50
-            ? ("down" as const)
-            : ("up" as const)
-      },
-      {
-        label: "Components",
-        value: `${Object.keys(metrics).filter(k => k.includes("component")).length}`,
-        trend: "stable" as const
-      },
-      {
-        label: "Performance Score",
-        value: currentProfile ? `${currentProfile.score}%` : "100%",
-        trend:
-          currentProfile && currentProfile.score > 80
-            ? ("up" as const)
-            : ("down" as const)
-      }
-    ]
-  }
-
-  const getServiceStatus = () => {
-    const services = [
-      {
-        name: "Performance Engine",
-        status: isMonitoring ? ("operational" as const) : ("degraded" as const)
-      },
-      { name: "Theme Engine", status: "operational" as const },
-      { name: "Component Factory", status: "operational" as const },
-      { name: "Builder.io SDK", status: "operational" as const },
-      { name: "Analytics Dashboard", status: "operational" as const },
-      {
-        name: "Memory Management",
-        status:
-          systemHealth === "critical"
-            ? ("degraded" as const)
-            : ("operational" as const)
-      }
-    ]
-    return services
-  }
-
-  const getRecentMetrics = () => {
-    return Object.values(metrics)
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, 10)
+  const getTrendIcon = (trend: string) => {
+    switch (trend) {
+      case "up":
+        return "↗"
+      case "down":
+        return "↘"
+      default:
+        return "→"
+    }
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <EmpireContainer>
-        <EmpireSection padding="xl">
-          <EmpireHero
-            title="📊 Empire Analytics Dashboard"
-            subtitle="INFINITE SCALE MONITORING"
-            description="Real-time performance monitoring, system analytics, and optimization insights for your Empire infrastructure."
-            primaryAction={{
-              text: isMonitoring ? "Stop Monitoring" : "Start Monitoring",
-              href: "#"
-            }}
-            secondaryAction={{
-              text: "Generate Report",
-              href: "#"
-            }}
-            size="xl"
-            centered={true}
-          />
-        </EmpireSection>
-
-        <EmpireSection padding="lg">
-          <div className="flex justify-center mb-8">
-            <div className="flex gap-4">
-              <EmpireButton
-                variant={isMonitoring ? "danger" : "primary"}
-                size="lg"
-                onClick={toggleMonitoring}
-              >
-                {isMonitoring ? "⏹️ Stop Monitoring" : "🚀 Start Monitoring"}
-              </EmpireButton>
-              <EmpireButton
-                variant="outline"
-                size="lg"
-                onClick={generateNewProfile}
-              >
-                📋 Generate Profile
-              </EmpireButton>
-              <EmpireBadge variant={getHealthColor()} size="lg">
-                System: {systemHealth.toUpperCase()}
-              </EmpireBadge>
+    <div className="min-h-screen bg-black p-6">
+      <EmpireContainer size="full">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
+                EMPIRE <span className="text-yellow-400">ANALYTICS</span>
+              </h1>
+              <p className="text-xl text-gray-300">
+                Performance insights • Usage analytics • Trend analysis
+              </p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <PreferenceDropdown
+                options={timeframeOptions}
+                value={selectedTimeframe}
+                onChange={setSelectedTimeframe}
+                backgroundColor="#1F2937"
+                textColor="white"
+                hoverColor="yellow-400"
+              />
+              <PreferenceDropdown
+                options={metricOptions}
+                value={selectedMetric}
+                onChange={setSelectedMetric}
+                backgroundColor="#1F2937"
+                textColor="white"
+                hoverColor="yellow-400"
+              />
             </div>
           </div>
+        </div>
 
-          <EmpireStats
-            title="Empire Performance Metrics"
-            subtitle="Real-time system performance indicators"
-            columns={4}
-            stats={getCoreMetrics()}
-          />
-        </EmpireSection>
+        {/* Overview Stats */}
+        <EmpireStats stats={overviewStats} columns={4} centered={false} />
 
-        <EmpireSection padding="lg">
-          <EmpireGrid columns={2} gap="lg">
-            <EmpireCard variant="elevated" padding="lg">
-              <h3 className="text-xl font-bold text-yellow-400 mb-4">
-                🏥 System Health Monitor
-              </h3>
-              <StatusPanel
-                systemStatus={
-                  systemHealth === "critical"
-                    ? "outage"
-                    : systemHealth === "warning"
-                      ? "degraded"
-                      : "operational"
-                }
-                services={getServiceStatus()}
-              />
-            </EmpireCard>
-
-            <EmpireCard variant="elevated" padding="lg">
-              <h3 className="text-xl font-bold text-yellow-400 mb-4">
-                ⚡ Live Performance Dashboard
-              </h3>
-              <Dashboard metrics={getCoreMetrics()} />
-            </EmpireCard>
-          </EmpireGrid>
-        </EmpireSection>
-
-        <EmpireSection padding="lg">
-          <EmpireGrid columns={3} gap="lg">
-            <EmpireCard variant="glow" padding="lg">
-              <div className="text-center">
-                <div className="text-4xl mb-4">🎯</div>
-                <h3 className="text-xl font-bold text-yellow-400 mb-2">
-                  Component Analytics
-                </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">
-                    {empireComponentFactory?.getAllComponents?.()?.length || 19}
-                  </p>
-                  <p className="text-gray-300">Registered Components</p>
-                  <EmpireBadge variant="success" size="sm">
-                    All Operational
-                  </EmpireBadge>
-                </div>
+        {/* Analytics Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+          {/* Main Analytics */}
+          <div className="lg:col-span-2">
+            <EmpireSection padding="lg" background="none">
+              <div className="mb-6">
+                <h2 className="text-3xl font-black text-white mb-2">
+                  Performance <span className="text-yellow-400">Metrics</span>
+                </h2>
+                <p className="text-gray-400">
+                  Detailed analytics and performance indicators
+                </p>
               </div>
-            </EmpireCard>
 
-            <EmpireCard variant="glow" padding="lg">
-              <div className="text-center">
-                <div className="text-4xl mb-4">🎨</div>
-                <h3 className="text-xl font-bold text-yellow-400 mb-2">
-                  Theme Analytics
-                </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">
-                    {empireTheme?.getAllThemes?.()?.length || 3}
-                  </p>
-                  <p className="text-gray-300">Available Themes</p>
-                  <EmpireBadge variant="info" size="sm">
-                    {empireTheme?.getCurrentTheme?.()?.name || "SaintVision™"}
-                  </EmpireBadge>
-                </div>
-              </div>
-            </EmpireCard>
+              <EmpireGrid columns={3} gap="lg">
+                {analyticsMetrics.map(metric => (
+                  <EmpireCard
+                    key={metric.label}
+                    variant="bordered"
+                    padding="lg"
+                  >
+                    <div className="text-center">
+                      <h3 className="text-lg font-bold text-white mb-3">
+                        {metric.label}
+                      </h3>
+                      <div className="text-3xl font-black text-yellow-400 mb-3">
+                        {metric.value}
+                      </div>
+                      <div
+                        className={`flex items-center justify-center text-sm ${getTrendColor(metric.trend)}`}
+                      >
+                        <span className="mr-1">
+                          {getTrendIcon(metric.trend)}
+                        </span>
+                        <span>
+                          {metric.change > 0 ? "+" : ""}
+                          {metric.change}%
+                        </span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        {metric.period}
+                      </div>
+                    </div>
+                  </EmpireCard>
+                ))}
+              </EmpireGrid>
 
-            <EmpireCard variant="glow" padding="lg">
-              <div className="text-center">
-                <div className="text-4xl mb-4">📈</div>
-                <h3 className="text-xl font-bold text-yellow-400 mb-2">
-                  Performance Profiles
-                </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">
-                    {profiles.length}
-                  </p>
-                  <p className="text-gray-300">Generated Profiles</p>
-                  <EmpireBadge variant="primary" size="sm">
-                    Live Tracking
-                  </EmpireBadge>
-                </div>
-              </div>
-            </EmpireCard>
-          </EmpireGrid>
-        </EmpireSection>
-
-        <EmpireSection padding="lg">
-          <EmpireCard variant="bordered" padding="xl">
-            <h3 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
-              📊 Real-time Metrics Feed
-            </h3>
-            <div className="space-y-4 max-h-96 overflow-y-auto">
-              {getRecentMetrics().map((metric, index) => (
-                <div
-                  key={`${metric.id}-${metric.timestamp}`}
-                  className="flex justify-between items-center p-3 bg-gray-800 rounded-lg"
-                >
-                  <div>
-                    <span className="font-medium text-white">
-                      {metric.name}
-                    </span>
-                    <span className="text-gray-400 text-sm ml-2">
-                      {new Date(metric.timestamp).toLocaleTimeString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-yellow-400 font-bold">
-                      {metric.value}
-                      {metric.unit}
-                    </span>
-                    <EmpireBadge
-                      variant={
-                        metric.threshold &&
-                        metric.value >= metric.threshold.critical
-                          ? "error"
-                          : metric.threshold &&
-                              metric.value >= metric.threshold.warning
-                            ? "warning"
-                            : "success"
-                      }
-                      size="sm"
-                    >
-                      {metric.category}
-                    </EmpireBadge>
-                  </div>
-                </div>
-              ))}
-              {getRecentMetrics().length === 0 && (
-                <div className="text-center py-8 text-gray-400">
-                  No metrics available. Start monitoring to see live data.
-                </div>
-              )}
-            </div>
-          </EmpireCard>
-        </EmpireSection>
-
-        {currentProfile && (
-          <EmpireSection padding="lg">
-            <EmpireCard variant="glow" padding="xl">
-              <h3 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
-                📋 Performance Profile Report
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-3">
-                    Profile Information
-                  </h4>
-                  <div className="space-y-2">
-                    <p>
-                      <strong>Name:</strong> {currentProfile.name}
-                    </p>
-                    <p>
-                      <strong>Score:</strong>{" "}
-                      <span className="text-yellow-400">
-                        {currentProfile.score}%
-                      </span>
-                    </p>
-                    <p>
-                      <strong>Generated:</strong>{" "}
-                      {new Date(currentProfile.timestamp).toLocaleString()}
-                    </p>
-                    <p>
-                      <strong>Metrics Analyzed:</strong>{" "}
-                      {currentProfile.metrics.length}
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-3">
-                    Optimization Recommendations
-                  </h4>
-                  <div className="space-y-2">
-                    {currentProfile.recommendations.length > 0 ? (
-                      currentProfile.recommendations.map((rec, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <span className="text-yellow-400">•</span>
-                          <span className="text-gray-300">{rec}</span>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-green-400">
-                        🎉 No optimization needed! System is performing
-                        excellently.
+              {/* Performance Chart */}
+              <div className="mt-8">
+                <EmpireCard variant="glow" padding="lg">
+                  <h3 className="text-2xl font-bold text-white mb-6">
+                    Performance Trends
+                  </h3>
+                  <div className="h-64 bg-gray-800/50 rounded-lg flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-4xl mb-4">📊</div>
+                      <p className="text-gray-400 mb-2">
+                        Performance trend visualization
                       </p>
-                    )}
+                      <p className="text-sm text-gray-500">
+                        Interactive charts would be rendered here
+                      </p>
+                      <div className="mt-4 flex justify-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-yellow-400 rounded"></div>
+                          <span className="text-xs text-gray-400">
+                            Performance
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-green-400 rounded"></div>
+                          <span className="text-xs text-gray-400">Uptime</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-blue-400 rounded"></div>
+                          <span className="text-xs text-gray-400">Usage</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </EmpireCard>
               </div>
-            </EmpireCard>
-          </EmpireSection>
-        )}
+            </EmpireSection>
+          </div>
+
+          {/* Sidebar Analytics */}
+          <div>
+            <EmpireSection padding="lg" background="none">
+              {/* Top Components */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  Top <span className="text-yellow-400">Components</span>
+                </h3>
+                <EmpireCard variant="bordered" padding="lg">
+                  <div className="space-y-4">
+                    {topComponents.map((component, index) => (
+                      <div
+                        key={component.name}
+                        className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-yellow-400 text-black rounded-lg flex items-center justify-center text-xs font-bold">
+                            {index + 1}
+                          </div>
+                          <div>
+                            <div className="font-medium text-white">
+                              {component.name}
+                            </div>
+                            <div className="text-sm text-gray-400">
+                              {component.value.toLocaleString()} uses
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`text-sm font-bold ${
+                            component.change > 0
+                              ? "text-green-400"
+                              : "text-red-400"
+                          }`}
+                        >
+                          {component.change > 0 ? "+" : ""}
+                          {component.change}%
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </EmpireCard>
+              </div>
+
+              {/* User Behavior */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  User <span className="text-yellow-400">Behavior</span>
+                </h3>
+                <EmpireCard variant="bordered" padding="lg">
+                  <div className="space-y-4">
+                    {userBehavior.map(behavior => (
+                      <div key={behavior.action}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-gray-400">
+                            {behavior.action}
+                          </span>
+                          <span className="text-sm font-bold text-white">
+                            {behavior.count}
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full"
+                            style={{ width: `${behavior.percentage}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </EmpireCard>
+              </div>
+
+              {/* Recent Alerts */}
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  Recent <span className="text-yellow-400">Alerts</span>
+                </h3>
+                <EmpireCard variant="bordered" padding="lg">
+                  <div className="space-y-3">
+                    {[
+                      {
+                        type: "Performance",
+                        message: "Response time improved by 15%",
+                        time: "2 hours ago",
+                        severity: "success"
+                      },
+                      {
+                        type: "Usage",
+                        message: "Component usage spike detected",
+                        time: "4 hours ago",
+                        severity: "info"
+                      },
+                      {
+                        type: "System",
+                        message: "Memory usage optimization needed",
+                        time: "6 hours ago",
+                        severity: "warning"
+                      }
+                    ].map((alert, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start space-x-3 p-3 bg-gray-800/30 rounded-lg"
+                      >
+                        <EmpireBadge variant={alert.severity as any} size="sm">
+                          {alert.type}
+                        </EmpireBadge>
+                        <div className="flex-1">
+                          <p className="text-sm text-white">{alert.message}</p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {alert.time}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </EmpireCard>
+              </div>
+            </EmpireSection>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-12 text-center">
+          <h3 className="text-2xl font-bold text-white mb-6">
+            Analytics Actions
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            <EmpireButton variant="primary" size="lg">
+              📊 Export Report
+            </EmpireButton>
+            <EmpireButton variant="outline" size="lg">
+              📈 Custom Dashboard
+            </EmpireButton>
+            <EmpireButton variant="outline" size="lg">
+              🔔 Set Alerts
+            </EmpireButton>
+            <EmpireButton variant="secondary" size="lg">
+              ⚙️ Configure Metrics
+            </EmpireButton>
+          </div>
+        </div>
       </EmpireContainer>
     </div>
   )
