@@ -1,0 +1,1 @@
+export default function Page() { return (<div className='text-white bg-black p-10'>Upgrade Options Coming Soon</div>); }

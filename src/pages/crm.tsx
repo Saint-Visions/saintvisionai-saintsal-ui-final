@@ -1,0 +1,1 @@
+export default function Page() { return (<div className='text-white bg-black p-10'>CRM Tools Coming Soon</div>); }
