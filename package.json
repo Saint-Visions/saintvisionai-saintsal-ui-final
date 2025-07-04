@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@builder.io/react": "^3.0.0",
+    "@builder.io/sdk-react": "^4.2.2",
     "@supabase/supabase-js": "^2.39.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

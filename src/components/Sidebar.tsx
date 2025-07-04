@@ -15,7 +15,7 @@ interface SidebarProps {
 }
 
 const defaultNavigationItems = [
-  { label: "🏠 Command Center", path: "/" },
+  { label: "🏠 Empire Home", path: "/" },
   { label: "🚀 AI Console", path: "/console" },
   { label: "💬 Dual-AI Chat", path: "/console/dual-chat" },
   { label: "📊 AI Analytics", path: "/console/analytics" },
@@ -24,7 +24,13 @@ const defaultNavigationItems = [
   { label: "Chat", path: "/chat" },
   { label: "Pricing", path: "/pricing" },
   { label: "CRM", path: "/crm" },
-  { label: "Builder", path: "/builder" },
+  { label: "🏗️ Builder.io CMS", path: "/builder" },
+  { label: "🚀 Empire LIVE", path: "/empire-live" },
+  { label: "📖 Builder Guide", path: "/builder-demo" },
+  { label: "🏆 Empire Showcase", path: "/empire-showcase" },
+  { label: "📊 Empire Status", path: "/empire-status" },
+  { label: "📈 Empire Analytics", path: "/empire-analytics" },
+  { label: "🔱 Empire Admin", path: "/empire-admin" },
   { label: "🎯 Demo", path: "/empire-demo" }
 ]
 

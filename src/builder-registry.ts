@@ -1,4 +1,4 @@
-import { BuilderBlocks } from "@builder.io/react"
+import { Builder } from "@builder.io/sdk-react"
 import {
   SaintVisionAIPricingCards,
   Sidebar,
@@ -12,11 +12,17 @@ import {
   EmpireStats,
   EmpireContainer,
   EmpireSection,
-  EmpireGrid
+  EmpireGrid,
+  PreferenceDropdown,
+  IntegrationStatusNotes,
+  StatusPanel,
+  ConsoleLayout,
+  Dashboard,
+  GHLEmbed
 } from "./components"
 
 // Register SaintVisionAIPricingCards component
-BuilderBlocks.registerComponent(SaintVisionAIPricingCards, {
+Builder.registerComponent(SaintVisionAIPricingCards, {
   name: "SaintVisionAIPricingCards",
   inputs: [
     {
@@ -103,7 +109,7 @@ BuilderBlocks.registerComponent(SaintVisionAIPricingCards, {
 })
 
 // Register Sidebar component
-BuilderBlocks.registerComponent(Sidebar, {
+Builder.registerComponent(Sidebar, {
   name: "Sidebar",
   inputs: [
     {
@@ -160,7 +166,7 @@ BuilderBlocks.registerComponent(Sidebar, {
 })
 
 // Register EmpireButton component
-BuilderBlocks.registerComponent(EmpireButton, {
+Builder.registerComponent(EmpireButton, {
   name: "EmpireButton",
   inputs: [
     {
@@ -206,7 +212,7 @@ BuilderBlocks.registerComponent(EmpireButton, {
 })
 
 // Register EmpireCard component
-BuilderBlocks.registerComponent(EmpireCard, {
+Builder.registerComponent(EmpireCard, {
   name: "EmpireCard",
   canHaveChildren: true,
   inputs: [
@@ -231,7 +237,7 @@ BuilderBlocks.registerComponent(EmpireCard, {
 })
 
 // Register EmpireInput component
-BuilderBlocks.registerComponent(EmpireInput, {
+Builder.registerComponent(EmpireInput, {
   name: "EmpireInput",
   inputs: [
     {
@@ -275,7 +281,7 @@ BuilderBlocks.registerComponent(EmpireInput, {
 })
 
 // Register EmpireBadge component
-BuilderBlocks.registerComponent(EmpireBadge, {
+Builder.registerComponent(EmpireBadge, {
   name: "EmpireBadge",
   inputs: [
     {
@@ -305,7 +311,7 @@ BuilderBlocks.registerComponent(EmpireBadge, {
 })
 
 // Register EmpireHero component
-BuilderBlocks.registerComponent(EmpireHero, {
+Builder.registerComponent(EmpireHero, {
   name: "EmpireHero",
   inputs: [
     {
@@ -372,7 +378,7 @@ BuilderBlocks.registerComponent(EmpireHero, {
 })
 
 // Register EmpireFeatureGrid component
-BuilderBlocks.registerComponent(EmpireFeatureGrid, {
+Builder.registerComponent(EmpireFeatureGrid, {
   name: "EmpireFeatureGrid",
   inputs: [
     {
@@ -437,7 +443,7 @@ BuilderBlocks.registerComponent(EmpireFeatureGrid, {
 })
 
 // Register EmpireCTA component
-BuilderBlocks.registerComponent(EmpireCTA, {
+Builder.registerComponent(EmpireCTA, {
   name: "EmpireCTA",
   inputs: [
     {
@@ -494,7 +500,7 @@ BuilderBlocks.registerComponent(EmpireCTA, {
 })
 
 // Register EmpireStats component
-BuilderBlocks.registerComponent(EmpireStats, {
+Builder.registerComponent(EmpireStats, {
   name: "EmpireStats",
   inputs: [
     {
@@ -550,7 +556,7 @@ BuilderBlocks.registerComponent(EmpireStats, {
 })
 
 // Register EmpireContainer component
-BuilderBlocks.registerComponent(EmpireContainer, {
+Builder.registerComponent(EmpireContainer, {
   name: "EmpireContainer",
   canHaveChildren: true,
   inputs: [
@@ -569,7 +575,7 @@ BuilderBlocks.registerComponent(EmpireContainer, {
 })
 
 // Register EmpireSection component
-BuilderBlocks.registerComponent(EmpireSection, {
+Builder.registerComponent(EmpireSection, {
   name: "EmpireSection",
   canHaveChildren: true,
   inputs: [
@@ -595,7 +601,7 @@ BuilderBlocks.registerComponent(EmpireSection, {
 })
 
 // Register EmpireGrid component
-BuilderBlocks.registerComponent(EmpireGrid, {
+Builder.registerComponent(EmpireGrid, {
   name: "EmpireGrid",
   canHaveChildren: true,
   inputs: [
@@ -619,6 +625,162 @@ BuilderBlocks.registerComponent(EmpireGrid, {
   ]
 })
 
+// Register PreferenceDropdown component
+Builder.registerComponent(PreferenceDropdown, {
+  name: "PreferenceDropdown",
+  inputs: [
+    {
+      name: "value",
+      type: "enum",
+      enum: ["gpt-4", "gpt-3.5", "claude", "llama"],
+      defaultValue: "gpt-4"
+    },
+    {
+      name: "label",
+      type: "string",
+      defaultValue: "AI Model",
+      helperText: "Label for the dropdown"
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      defaultValue: false
+    }
+  ]
+})
+
+// Register IntegrationStatusNotes component
+Builder.registerComponent(IntegrationStatusNotes, {
+  name: "IntegrationStatusNotes",
+  inputs: [
+    {
+      name: "status",
+      type: "enum",
+      enum: ["connected", "disconnected", "error", "pending"],
+      defaultValue: "connected"
+    },
+    {
+      name: "serviceName",
+      type: "string",
+      defaultValue: "Service",
+      required: true
+    },
+    {
+      name: "notes",
+      type: "longText",
+      helperText: "Additional status notes"
+    }
+  ]
+})
+
+// Register StatusPanel component
+Builder.registerComponent(StatusPanel, {
+  name: "StatusPanel",
+  inputs: [
+    {
+      name: "systemStatus",
+      type: "enum",
+      enum: ["operational", "degraded", "outage", "maintenance"],
+      defaultValue: "operational"
+    },
+    {
+      name: "services",
+      type: "list",
+      subFields: [
+        {
+          name: "name",
+          type: "string",
+          defaultValue: "Service",
+          required: true
+        },
+        {
+          name: "status",
+          type: "enum",
+          enum: ["operational", "degraded", "outage"],
+          defaultValue: "operational"
+        }
+      ],
+      defaultValue: [
+        { name: "API", status: "operational" },
+        { name: "Database", status: "operational" }
+      ]
+    }
+  ]
+})
+
+// Register ConsoleLayout component
+Builder.registerComponent(ConsoleLayout, {
+  name: "ConsoleLayout",
+  canHaveChildren: true,
+  inputs: [
+    {
+      name: "title",
+      type: "string",
+      defaultValue: "Console",
+      helperText: "Console page title"
+    },
+    {
+      name: "showSidebar",
+      type: "boolean",
+      defaultValue: true
+    }
+  ]
+})
+
+// Register Dashboard component
+Builder.registerComponent(Dashboard, {
+  name: "Dashboard",
+  inputs: [
+    {
+      name: "metrics",
+      type: "list",
+      subFields: [
+        {
+          name: "label",
+          type: "string",
+          defaultValue: "Metric",
+          required: true
+        },
+        {
+          name: "value",
+          type: "string",
+          defaultValue: "0",
+          required: true
+        },
+        {
+          name: "trend",
+          type: "enum",
+          enum: ["up", "down", "stable"],
+          defaultValue: "stable"
+        }
+      ],
+      defaultValue: [
+        { label: "Active Users", value: "1,234", trend: "up" },
+        { label: "Requests", value: "56,789", trend: "stable" }
+      ]
+    }
+  ]
+})
+
+// Register GHLEmbed component
+Builder.registerComponent(GHLEmbed, {
+  name: "GHLEmbed",
+  inputs: [
+    {
+      name: "embedUrl",
+      type: "url",
+      required: true,
+      helperText: "GoHighLevel embed URL"
+    },
+    {
+      name: "height",
+      type: "string",
+      defaultValue: "600px",
+      helperText: "Embed height (e.g., 600px, 100vh)"
+    }
+  ]
+})
+
 export {
   SaintVisionAIPricingCards,
   Sidebar,
@@ -632,5 +794,11 @@ export {
   EmpireStats,
   EmpireContainer,
   EmpireSection,
-  EmpireGrid
+  EmpireGrid,
+  PreferenceDropdown,
+  IntegrationStatusNotes,
+  StatusPanel,
+  ConsoleLayout,
+  Dashboard,
+  GHLEmbed
 }
