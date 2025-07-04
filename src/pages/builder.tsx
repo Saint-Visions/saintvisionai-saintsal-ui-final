@@ -1,4 +1,30 @@
 import { BuilderComponent, builder } from "@builder.io/react";
+import { useEffect, useState } from "react";
+
+// Initialize Builder.io with your public API key
+builder.init(import.meta.env.VITE_BUILDER_API_KEY);
+
+export default function Page() {
+  const [builderContent, setBuilderContent] = useState<any>(null);
+
+  useEffect(() => {
+    builder
+      .get("page", { url: window.location.pathname })
+      .toPromise()
+      .then((content) => setBuilderContent(content));
+  }, []);
+
+  return (
+    <div>
+      {builderContent ? (
+        <BuilderComponent model="page" content={builderContent} />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+}
+import { BuilderComponent, builder } from "@builder.io/react";
 import React from "react";
 
 builder.init(import.meta.env.VITE_BUILDER_API_KEY);
