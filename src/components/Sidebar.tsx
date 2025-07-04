@@ -1,17 +1,60 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react"
+import { Link } from "react-router-dom"
 
-export default function Sidebar() {
+interface NavigationItem {
+  label: string
+  path: string
+}
+
+interface SidebarProps {
+  navigationItems?: NavigationItem[]
+  backgroundColor?: string
+  textColor?: string
+  hoverColor?: string
+  width?: string
+}
+
+const defaultNavigationItems = [
+  { label: "🏠 Command Center", path: "/" },
+  { label: "🚀 AI Console", path: "/console" },
+  { label: "💬 Dual-AI Chat", path: "/console/dual-chat" },
+  { label: "📊 AI Analytics", path: "/console/analytics" },
+  { label: "⚙️ Deployment", path: "/console/deployment" },
+  { label: "🔗 GHL Integration", path: "/ghl" },
+  { label: "Chat", path: "/chat" },
+  { label: "Pricing", path: "/pricing" },
+  { label: "CRM", path: "/crm" },
+  { label: "Builder", path: "/builder" },
+  { label: "🎯 Demo", path: "/empire-demo" }
+]
+
+export function Sidebar(props: SidebarProps) {
+  const {
+    navigationItems = defaultNavigationItems,
+    backgroundColor = "#10161C",
+    textColor = "white",
+    hoverColor = "yellow-500",
+    width = "64"
+  } = props
+
   return (
-    <aside className="w-64 h-screen bg-[#10161C] text-white p-4 space-y-4">
+    <aside
+      className={`w-${width} h-screen text-${textColor} p-4 space-y-4`}
+      style={{ backgroundColor }}
+    >
       <nav className="flex flex-col space-y-2">
-        <Link to="/dashboard" className="hover:text-yellow-500">Dashboard</Link>
-        <Link to="/chat" className="hover:text-yellow-500">Chat</Link>
-        <Link to="/pricing" className="hover:text-yellow-500">Pricing</Link>
-        <Link to="/crm" className="hover:text-yellow-500">CRM</Link>
-        <Link to="/upgrade" className="hover:text-yellow-500">Upgrade</Link>
-        <Link to="/builder" className="hover:text-yellow-500">Builder</Link>
+        {navigationItems.map(item => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`hover:text-${hoverColor}`}
+          >
+            {item.label}
+          </Link>
+        ))}
       </nav>
     </aside>
   )
 }
+
+export default Sidebar

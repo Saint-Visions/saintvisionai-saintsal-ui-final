@@ -1,9 +1,5 @@
-/* index.css — basic reset and font for build */
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: #f5f5f5;
-}
-
+/* SaintSal Empire Design System */
+@import "./styles/design-tokens.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

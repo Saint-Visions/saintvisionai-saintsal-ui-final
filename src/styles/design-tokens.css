@@ -1,0 +1,172 @@
+/* SaintSal™ Empire Design System Tokens */
+
+:root {
+  /* === COLORS === */
+
+  /* Primary Brand Colors */
+  --empire-primary: #fcd34d; /* yellow-300 */
+  --empire-primary-dark: #f59e0b; /* yellow-500 */
+  --empire-primary-darker: #d97706; /* yellow-600 */
+  --empire-primary-light: #fef3c7; /* yellow-100 */
+
+  /* Background Colors */
+  --empire-bg-primary: #000000; /* Pure black */
+  --empire-bg-secondary: #10161c; /* Dark blue-gray */
+  --empire-bg-tertiary: #1f2937; /* gray-800 */
+  --empire-bg-accent: #111827; /* gray-900 */
+
+  /* Text Colors */
+  --empire-text-primary: #ffffff; /* Pure white */
+  --empire-text-secondary: #e5e7eb; /* gray-200 */
+  --empire-text-muted: #9ca3af; /* gray-400 */
+  --empire-text-accent: #fcd34d; /* yellow-300 */
+
+  /* Border Colors */
+  --empire-border-primary: #fcd34d; /* yellow-300 */
+  --empire-border-secondary: #374151; /* gray-700 */
+  --empire-border-muted: #1f2937; /* gray-800 */
+
+  /* Status Colors */
+  --empire-success: #10b981; /* emerald-500 */
+  --empire-warning: #f59e0b; /* amber-500 */
+  --empire-error: #ef4444; /* red-500 */
+  --empire-info: #3b82f6; /* blue-500 */
+
+  /* === TYPOGRAPHY === */
+
+  /* Font Families */
+  --empire-font-primary:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --empire-font-heading:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --empire-font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Font Sizes */
+  --empire-text-xs: 0.75rem; /* 12px */
+  --empire-text-sm: 0.875rem; /* 14px */
+  --empire-text-base: 1rem; /* 16px */
+  --empire-text-lg: 1.125rem; /* 18px */
+  --empire-text-xl: 1.25rem; /* 20px */
+  --empire-text-2xl: 1.5rem; /* 24px */
+  --empire-text-3xl: 1.875rem; /* 30px */
+  --empire-text-4xl: 2.25rem; /* 36px */
+  --empire-text-5xl: 3rem; /* 48px */
+  --empire-text-6xl: 3.75rem; /* 60px */
+
+  /* Font Weights */
+  --empire-font-light: 300;
+  --empire-font-normal: 400;
+  --empire-font-medium: 500;
+  --empire-font-semibold: 600;
+  --empire-font-bold: 700;
+  --empire-font-black: 900;
+
+  /* Line Heights */
+  --empire-leading-tight: 1.25;
+  --empire-leading-normal: 1.5;
+  --empire-leading-relaxed: 1.75;
+
+  /* === SPACING === */
+
+  --empire-space-1: 0.25rem; /* 4px */
+  --empire-space-2: 0.5rem; /* 8px */
+  --empire-space-3: 0.75rem; /* 12px */
+  --empire-space-4: 1rem; /* 16px */
+  --empire-space-5: 1.25rem; /* 20px */
+  --empire-space-6: 1.5rem; /* 24px */
+  --empire-space-8: 2rem; /* 32px */
+  --empire-space-10: 2.5rem; /* 40px */
+  --empire-space-12: 3rem; /* 48px */
+  --empire-space-16: 4rem; /* 64px */
+  --empire-space-20: 5rem; /* 80px */
+  --empire-space-24: 6rem; /* 96px */
+
+  /* === BORDERS === */
+
+  --empire-border-width: 1px;
+  --empire-border-width-2: 2px;
+  --empire-border-width-4: 4px;
+
+  --empire-radius-sm: 0.125rem; /* 2px */
+  --empire-radius: 0.25rem; /* 4px */
+  --empire-radius-md: 0.375rem; /* 6px */
+  --empire-radius-lg: 0.5rem; /* 8px */
+  --empire-radius-xl: 0.75rem; /* 12px */
+  --empire-radius-2xl: 1rem; /* 16px */
+  --empire-radius-full: 9999px;
+
+  /* === SHADOWS === */
+
+  --empire-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --empire-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+  --empire-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.6);
+  --empire-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+  --empire-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  --empire-shadow-glow: 0 0 20px rgba(252, 211, 77, 0.3);
+
+  /* === TRANSITIONS === */
+
+  --empire-transition-fast: 150ms ease-in-out;
+  --empire-transition-normal: 250ms ease-in-out;
+  --empire-transition-slow: 350ms ease-in-out;
+
+  /* === Z-INDEX === */
+
+  --empire-z-dropdown: 1000;
+  --empire-z-sticky: 1020;
+  --empire-z-fixed: 1030;
+  --empire-z-modal: 1040;
+  --empire-z-popover: 1050;
+  --empire-z-tooltip: 1060;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--empire-font-primary);
+  line-height: var(--empire-leading-normal);
+}
+
+body {
+  margin: 0;
+  background-color: var(--empire-bg-primary);
+  color: var(--empire-text-primary);
+  font-size: var(--empire-text-base);
+}
+
+/* Utility Classes */
+.empire-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--empire-space-6);
+}
+
+.empire-section {
+  padding: var(--empire-space-20) 0;
+}
+
+.empire-grid {
+  display: grid;
+  gap: var(--empire-space-6);
+}
+
+.empire-flex {
+  display: flex;
+  align-items: center;
+  gap: var(--empire-space-4);
+}
+
+.empire-text-center {
+  text-align: center;
+}
+
+.empire-glow {
+  box-shadow: var(--empire-shadow-glow);
+}

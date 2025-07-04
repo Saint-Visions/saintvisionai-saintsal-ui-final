@@ -1,17 +1,18 @@
-import { BuilderComponent, builder } from "@builder.io/react";
-import { useEffect, useState } from "react";
+import { BuilderComponent, builder } from "@builder.io/react"
+import { useEffect, useState } from "react"
+import "../builder-registry" // Import to register components
 
-builder.init(import.meta.env.VITE_BUILDER_API_KEY);
+builder.init(import.meta.env.VITE_BUILDER_API_KEY)
 
 export default function Page() {
-  const [content, setContent] = useState<any>(null);
+  const [content, setContent] = useState<any>(null)
 
   useEffect(() => {
     builder
       .get("page", { url: window.location.pathname })
       .toPromise()
-      .then((res) => setContent(res));
-  }, []);
+      .then(res => setContent(res))
+  }, [])
 
   return (
     <div>
@@ -21,6 +22,5 @@ export default function Page() {
         <p>Loading Builder content...</p>
       )}
     </div>
-  );
+  )
 }
-
