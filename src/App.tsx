@@ -25,6 +25,7 @@ import EmpireDemo from "./pages/empire-demo"
 // Feature Pages
 import BuilderDemo from "./pages/builder-demo"
 import BuilderDynamic from "./pages/builder-dynamic"
+import BuilderFusionPage from "./pages/builder-fusion"
 import Pricing from "./pages/pricing"
 import Chat from "./pages/chat"
 import CRM from "./pages/crm"
@@ -244,6 +245,7 @@ export default function App() {
             </EmpireMainLayout>
           }
         />
+        <Route path="/builder-fusion" element={<BuilderFusionPage />} />
 
         {/* Legacy Redirects */}
         <Route path="/solutions" element={<Landing />} />
