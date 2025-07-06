@@ -13,7 +13,7 @@ export function testBuilderIntegration() {
     ready: false
   };
 
-  // API key check
+  // Test API key
   if (!BUILDER_CONFIG.apiKey) {
     console.error("❌ Builder.io API key not found");
     console.log("💡 Set VITE_BUILDER_API_KEY in your environment variables");
@@ -21,7 +21,7 @@ export function testBuilderIntegration() {
   }
   console.log("✅ Builder.io API key found");
 
-  // Initialization check
+  // Test initialization
   try {
     results.initialized = initializeBuilder();
     if (results.initialized) {
@@ -35,14 +35,14 @@ export function testBuilderIntegration() {
     return results;
   }
 
-  // SDK presence check
+  // Test SDK loaded
   try {
     if (typeof window !== "undefined" && (window as any).Builder) {
       console.log("✅ Builder.io SDK loaded");
       results.componentsRegistered = true;
     }
   } catch (error) {
-    console.error("❌ Component registration test failed:", error);
+    console.error("❌ SDK load check failed:", error);
   }
 
   results.ready =
@@ -58,7 +58,7 @@ export function testBuilderIntegration() {
 }
 
 /**
- * Status overview (can be exposed in a health dashboard)
+ * Get current integration status
  */
 export function getBuilderStatus() {
   return {
@@ -71,7 +71,7 @@ export function getBuilderStatus() {
   };
 }
 
-// Auto-run test in development
+// Auto-run only in dev
 if (import.meta.env.DEV) {
   setTimeout(() => {
     testBuilderIntegration();
