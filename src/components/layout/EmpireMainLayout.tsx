@@ -1,5 +1,5 @@
-import React from "react";
-import EmpireSidebarClean from "../EmpireSidebarClean"; // 👈 Adjusted for local path, not alias
+import * as React from "react";
+import EmpireSidebarClean from "../EmpireSidebarClean"; // Adjust path if needed
 
 interface EmpireMainLayoutProps {
   children: React.ReactNode;
@@ -15,19 +15,3 @@ export default function EmpireMainLayout({ children }: EmpireMainLayoutProps) {
     </div>
   );
 }
-import React from "react";
-import EmpireSidebarClean from "@/components/EmpireSidebarClean";
-
-interface EmpireMainLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function EmpireMainLayout({ children }: EmpireMainLayoutProps) {
-  return (
-    <div className="min-h-screen bg-black flex">
-      <EmpireSidebarClean />
-      <main className="flex-1">{children}</main>
-    </div>
-  );
-}
-
