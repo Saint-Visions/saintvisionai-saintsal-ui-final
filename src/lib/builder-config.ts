@@ -1,16 +1,16 @@
-import { builder } from "@builder.io/sdk-react"
+import { builder } from '@builder.io/sdk' // 🔧 Correct import
 
 // Builder.io Configuration
 export const BUILDER_CONFIG = {
   apiKey: import.meta.env.VITE_BUILDER_API_KEY,
   models: {
-    page: "page",
-    section: "section",
-    data: "data"
+    page: 'page',
+    section: 'section',
+    data: 'data'
   },
   preview: {
     enabled: import.meta.env.DEV,
-    host: import.meta.env.VITE_APP_URL || "http://localhost:5173"
+    host: import.meta.env.VITE_APP_URL || 'http://localhost:5173'
   }
 } as const
 
@@ -18,7 +18,7 @@ export const BUILDER_CONFIG = {
 export function initializeBuilder() {
   if (!BUILDER_CONFIG.apiKey) {
     console.warn(
-      "Builder.io API key not found. Please set VITE_BUILDER_API_KEY in your environment variables."
+      'Builder.io API key not found. Please set VITE_BUILDER_API_KEY in your environment variables.'
     )
     return false
   }
@@ -44,8 +44,8 @@ export async function getBuilderContent(
   try {
     const content = await builder
       .get(model, {
-        url: options.url || "/",
-        preview: options.preview || (import.meta.env.DEV ? "true" : undefined),
+        url: options.url || '/',
+        preview: options.preview || (import.meta.env.DEV ? 'true' : undefined),
         cachebust: options.cachebust ?? import.meta.env.DEV,
         ...options.userAttributes
       })
@@ -72,8 +72,8 @@ export function isPreviewMode(
       : searchParams
 
   return (
-    params["builder.preview"] === "true" ||
-    params["builder.frameEditing"] === "true"
+    params['builder.preview'] === 'true' ||
+    params['builder.frameEditing'] === 'true'
   )
 }
 
@@ -91,8 +91,8 @@ export function isEditingMode(
       : searchParams
 
   return (
-    params["builder.editing"] === "true" ||
-    params["builder.frameEditing"] === "true"
+    params['builder.editing'] === 'true' ||
+    params['builder.frameEditing'] === 'true'
   )
 }
 
