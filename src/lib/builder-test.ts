@@ -13,7 +13,6 @@ export function testBuilderIntegration() {
     ready: false
   };
 
-  // Test API key
   if (!BUILDER_CONFIG.apiKey) {
     console.error("❌ Builder.io API key not found");
     console.log("💡 Set VITE_BUILDER_API_KEY in your environment variables");
@@ -21,7 +20,6 @@ export function testBuilderIntegration() {
   }
   console.log("✅ Builder.io API key found");
 
-  // Test initialization
   try {
     results.initialized = initializeBuilder();
     if (results.initialized) {
@@ -35,7 +33,6 @@ export function testBuilderIntegration() {
     return results;
   }
 
-  // Test SDK loaded
   try {
     if (typeof window !== "undefined" && (window as any).Builder) {
       console.log("✅ Builder.io SDK loaded");

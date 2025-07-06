@@ -1,7 +1,7 @@
+import { builder } from "@builder.io/react"; // ✅ Correct SDK for React
 
 /**
  * Builder.io configuration
- * Replace the values below with your actual configuration or import from a config file.
  */
 export const BUILDER_CONFIG = {
   apiKey: import.meta.env.VITE_BUILDER_API_KEY || "",
@@ -11,85 +11,50 @@ export const BUILDER_CONFIG = {
 };
 
 /**
- * Test Builder.io integration health
+ * Initialize Builder.io
  */
-export function testBuilderIntegration() {
-  console.log("🏗️ Testing Builder.io Integration...");
-
-  const results = {
-    apiKey: !!BUILDER_CONFIG.apiKey,
-    initialized: false,
-    componentsRegistered: false,
-    ready: false
-  };
-
-  // Test API key
+export function initializeBuilder(): boolean {
   if (!BUILDER_CONFIG.apiKey) {
-    console.error("❌ Builder.io API key not found");
-    console.log("💡 Set VITE_BUILDER_API_KEY in your environment variables");
-    return results;
-  }
-  console.log("✅ Builder.io API key found");
-
-  // Test initialization
-  try {
-    results.initialized = initializeBuilder();
-    if (results.initialized) {
-      console.log("✅ Builder.io initialized successfully");
-    } else {
-      console.error("❌ Builder.io initialization failed");
-      return results;
-    }
-  } catch (error) {
-    console.error("❌ Builder.io initialization error:", error);
-    return results;
+    console.warn("❌ Builder.io API key missing.");
+    return false;
   }
 
-  // Test SDK loaded
-  try {
-    if (typeof window !== "undefined" && (window as any).Builder) {
-      console.log("✅ Builder.io SDK loaded");
-      results.componentsRegistered = true;
-    }
-  } catch (error) {
-    console.error("❌ SDK load check failed:", error);
-  }
-
-  results.ready =
-    results.apiKey && results.initialized && results.componentsRegistered;
-
-  if (results.ready) {
-    console.log("🎉 Builder.io integration is ready!");
-    console.log("📖 Visit /builder-demo for the integration guide");
-    console.log("🏗️ Visit https://builder.io/content to create content");
-  }
-
-  return results;
+  builder.init(BUILDER_CONFIG.apiKey);
+  builder.canTrack = !import.meta.env.DEV;
+  return true;
 }
 
 /**
- * Get current integration status
+ * Fetch Builder.io content
  */
-export function getBuilderStatus() {
-  return {
-    configured: !!BUILDER_CONFIG.apiKey,
-    environment: import.meta.env.DEV ? "development" : "production",
-    apiKey: BUILDER_CONFIG.apiKey
-      ? `${BUILDER_CONFIG.apiKey.slice(0, 8)}...`
-      : "not set",
-    previewMode: BUILDER_CONFIG.preview.enabled
-  };
-}
+export async function getBuilderContent(
+  model: string,
+  options: {
+    url?: string;
+    preview?: string | boolean;
+    cachebust?: boolean;
+    userAttributes?: Record<string, any>;
+  } = {}
+) {
+  try {
+    const content = await builder
+      .get(model, {
+        url: options.url || "/",
+        preview:
+          options.preview !== undefined
+            ? (
+                (typeof options.preview === "boolean" && options.preview === true) ||
+                (typeof options.preview === "string" && options.preview === "true")
+              )
+            : (import.meta.env.DEV ? true : undefined),
+        cachebust: options.cachebust ?? import.meta.env.DEV,
+        userAttributes: options.userAttributes
+      })
+      .toPromise();
 
-// Auto-run only in dev
-if (import.meta.env.DEV) {
-  setTimeout(() => {
-    testBuilderIntegration();
-  }, 1000);
+    return { content, error: null };
+  } catch (error) {
+    console.error(`Builder.io: Failed to fetch ${model} content:`, error);
+    return { content: null, error: error as Error };
+  }
 }
-
-export function initializeBuilder(): boolean {
-  throw new Error("Function not implemented.");
-}
-// export { initializeBuilder, getBuilderContent };
-
