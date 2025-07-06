@@ -1,0 +1,10 @@
+diff --git a/components/ui/brand.tsx b/components/ui/brand.tsx
+index e69de29..85f31cf 100644
+--- a/components/ui/brand.tsx
++++ b/components/ui/brand.tsx
+@@ -1,6 +1,6 @@
+-"use client"
+-import React from "react"
+-"use client"
++"use client"
++import React from "react"

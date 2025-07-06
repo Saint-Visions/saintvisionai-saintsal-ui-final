@@ -1,0 +1,15 @@
+diff --git a/components/chat/quick-settings.tsx b/components/chat/quick-settings.tsx
+index e69de29..9fa8abc 100644
+--- a/components/chat/quick-settings.tsx
++++ b/components/chat/quick-settings.tsx
+@@ -188,7 +188,8 @@
+ return (
+-  <DropdownMenu
++  <>
++    <DropdownMenu
+       open={isOpen}
+       onOpenChange={setIsOpen}
+     >
+     </DropdownMenu>
++  </>
+ );

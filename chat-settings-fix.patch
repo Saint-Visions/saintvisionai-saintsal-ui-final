@@ -1,0 +1,19 @@
+diff --git a/components/chat/chat-settings.tsx b/components/chat/chat-settings.tsx
+index e69de29..b3c8ef1 100644
+--- a/components/chat/chat-settings.tsx
++++ b/components/chat/chat-settings.tsx
+@@ -67,7 +67,8 @@
+ const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)
+
+ return (
+-  <Popover>
++  <>
++    <Popover>
+       <PopoverTrigger>
+         <Button ref={buttonRef}>
+           Settings
+         </Button>
+       </PopoverTrigger>
+     </Popover>
++  </>
+ );

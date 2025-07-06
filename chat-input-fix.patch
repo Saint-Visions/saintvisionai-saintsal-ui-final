@@ -1,0 +1,14 @@
+diff --git a/components/chat/chat-input.tsx b/components/chat/chat-input.tsx
+index e69de29..c1a3b7e 100644
+--- a/components/chat/chat-input.tsx
++++ b/components/chat/chat-input.tsx
+@@ -165,7 +165,8 @@
+ }
+
+ return (
+-  <>
++  <>
+     <div className="flex flex-col flex-wrap justify-center gap-2">
+       <ChatFilesDisplay />
++    </>
+   );

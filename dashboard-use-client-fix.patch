@@ -1,0 +1,10 @@
+diff --git a/components/ui/dashboard.tsx b/components/ui/dashboard.tsx
+index e69de29..a4d6e92 100644
+--- a/components/ui/dashboard.tsx
++++ b/components/ui/dashboard.tsx
+@@ -1,6 +1,6 @@
+-"use client"
+-import React from "react"
+-"use client"
++"use client"
++import React from "react"
