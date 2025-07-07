@@ -1,7 +1,19 @@
-export default function handler(req, res) {
-  if (req.body?.type === 'url_verification') {
-    return res.status(200).send(req.body.challenge); // 🔥 EXACTLY what Slack needs
-  }
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    try {
+      const { type, challenge } = req.body;
 
-  return res.status(200).send('OK');
+      if (type === 'url_verification' && challenge) {
+        // ✅ Exactly what Slack expects
+        return res.status(200).send(challenge);
+      }
+
+      return res.status(200).send('OK');
+    } catch (err) {
+      console.error('Slack challenge handler error:', err);
+      return res.status(400).send('Invalid request');
+    }
+  } else {
+    return res.status(405).send('Method Not Allowed');
+  }
 }
