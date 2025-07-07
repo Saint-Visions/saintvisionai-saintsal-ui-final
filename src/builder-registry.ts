@@ -1,4 +1,4 @@
-import { Builder } from "@builder.io/react"; // ✅ Correct package + import
+import builder, { Builder } from "@builder.io/react"; // ✅ Correct package + import
 
 import {
   SaintVisionAIPricingCards,
@@ -25,6 +25,7 @@ import {
 // 💡 Encapsulate all registrations in a function
 export function registerAllBuilderComponents() {
   Builder.registerComponent(SaintVisionAIPricingCards, {
+
     name: "SaintVisionAIPricingCards",
     inputs: [/* ... */] // keep all your pricing cards inputs here
   });
