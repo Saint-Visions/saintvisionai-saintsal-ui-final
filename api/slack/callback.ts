@@ -3,12 +3,26 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // ✅ Handle Slack Event Subscription Challenge
-  if (req.method === 'POST' && req.body?.type === 'url_verification') {
-    return res.status(200).json({ challenge: req.body.challenge });
+  if (req.method === 'POST' && req.headers['content-type']?.includes('application/json')) {
+    try {
+      const body = req.body;
+
+      // ✅ Handle Slack Event Subscription Challenge
+      if (body?.type === 'url_verification' && body.challenge) {
+        return res.status(200).json({ challenge: body.challenge });
+      }
+
+      // 🧠 Log any incoming events for now
+      console.log('🧠 Slack Event Received:', JSON.stringify(body, null, 2));
+
+      return res.status(200).json({ ok: true });
+    } catch (error) {
+      console.error('❌ Error handling Slack event:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
-  // 🔒 Optional: Log OAuth flow fallback
+  // Handle Slack OAuth (fallback for GET)
   const { code, state, error } = req.query;
 
   if (error) {
