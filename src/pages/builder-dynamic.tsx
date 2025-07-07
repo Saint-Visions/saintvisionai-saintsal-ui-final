@@ -1,64 +1,40 @@
-// ✅ Use correct Builder SDK for React
-import { builder } from "@builder.io/react";
+// src/pages/builder-dynamic.tsx
 
-export const BUILDER_CONFIG = {
-  apiKey: import.meta.env.VITE_BUILDER_API_KEY || "",
-  preview: {
-    enabled: !!import.meta.env.VITE_BUILDER_PREVIEW_ENABLED
+import { useEffect, useState } from "react";
+import { builder } from "@builder.io/react";
+import { getBuilderContent, initializeBuilder } from "../lib/builder-config";
+
+initializeBuilder();
+
+const BuilderDynamic = () => {
+  const [content, setContent] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchContent() {
+      const { content, error } = await getBuilderContent("page", {
+        url: window.location.pathname
+      });
+
+      if (error) {
+        console.error("Builder content error:", error);
+      }
+
+      setContent(content);
+    }
+
+    fetchContent();
+  }, []);
+
+  if (!content) {
+    return <div>Loading...</div>;
   }
+
+  return (
+    <div>
+      <h1>{content?.data?.title || "Dynamic Page"}</h1>
+      <div dangerouslySetInnerHTML={{ __html: content?.data?.body || "" }} />
+    </div>
+  );
 };
 
-/**
- * Initialize the Builder SDK with your API key
- */
-export function initializeBuilder() {
-  builder.init(BUILDER_CONFIG.apiKey);
-  // Removed builder.canTrack = ... to avoid TypeScript issues (not standard SDK field)
-}
-
-/**
- * Fetch Builder.io content
- */
-export async function getBuilderContent(
-  model: string,
-  options: {
-    url?: string;
-    preview?: string | boolean;
-    cachebust?: boolean;
-    userAttributes?: Record<string, any>;
-  } = {}
-) {
-  try {
-    const content = await builder
-      .get(model, {
-        url: options.url || "/",
-        preview:
-          options.preview !== undefined
-            ? (
-                (typeof options.preview === "boolean" && options.preview === true) ||
-                (typeof options.preview === "string" && options.preview === "true")
-              )
-            : (import.meta.env.DEV ? true : undefined),
-        cachebust: options.cachebust ?? import.meta.env.DEV,
-        userAttributes: options.userAttributes
-      })
-      .toPromise();
-
-    return { content, error: null };
-  } catch (error) {
-    console.error(`Builder.io: Failed to fetch ${model} content:`, error);
-    return { content: null, error: error as Error };
-  }
-}
-
-/**
- * Are we previewing this page in Builder’s preview mode?
- */
-export const isPreviewMode = (params: URLSearchParams) =>
-  params.get("builder.preview") === "true";
-
-/**
- * Are we inside Builder’s visual editor?
- */
-export const isEditingMode = () =>
-  typeof window !== "undefined" && (window as any).Builder?.editing === true;
+export default BuilderDynamic;
