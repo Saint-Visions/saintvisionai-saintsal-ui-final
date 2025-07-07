@@ -60,5 +60,5 @@ export const isPreviewMode = (params: URLSearchParams) =>
 /**
  * Are we inside Builder’s visual editor?
  */
-export const isEditingMode = () =>
+export const isEditingMode = (searchParams: URLSearchParams) =>
   typeof window !== "undefined" && (window as any).Builder?.editing === true;

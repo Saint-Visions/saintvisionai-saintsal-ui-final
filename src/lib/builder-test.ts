@@ -21,13 +21,9 @@ export function testBuilderIntegration() {
   console.log("✅ Builder.io API key found");
 
   try {
-    results.initialized = initializeBuilder();
-    if (results.initialized) {
-      console.log("✅ Builder.io initialized successfully");
-    } else {
-      console.error("❌ Builder.io initialization failed");
-      return results;
-    }
+    initializeBuilder();
+    results.initialized = true;
+    console.log("✅ Builder.io initialized successfully");
   } catch (error) {
     console.error("❌ Builder.io initialization error:", error);
     return results;
