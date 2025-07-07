@@ -1,0 +1,50 @@
+diff --git a/src/components/chat/chat-input.tsx b/src/components/chat/chat-input.tsx
+index 5ae64e2..9d452f3 100644
+--- a/src/components/chat/chat-input.tsx
++++ b/src/components/chat/chat-input.tsx
+@@ -165,7 +165,6 @@ const ChatInput = () => {
+   }
+
+   return (
+-    <>
+       <div className="flex flex-col flex-wrap justify-center gap-2">
+         <ChatFilesDisplay />
+         {files.length > 0 && (
+@@ -213,7 +212,6 @@ const ChatInput = () => {
+         )}
+       </div>
+
+-      <div className="border-input relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border-2">
+         <div className="absolute bottom-[76px] left-0 max-h-[300px] w-full overflow-auto rounded-xl dark:border-none">
+           <ChatCommandInput />
+         </div>
+@@ -223,7 +221,6 @@ const ChatInput = () => {
+       </div>
+-    </>
+   )
+ }
+
+diff --git a/src/components/chat/chat-settings.tsx b/src/components/chat/chat-settings.tsx
+index b2e457d..7f14e6e 100644
+--- a/src/components/chat/chat-settings.tsx
++++ b/src/components/chat/chat-settings.tsx
+@@ -67,7 +67,6 @@ const ChatSettings = () => {
+   const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)
+
+   return (
+-    <Popover>
+       <PopoverTrigger>
+         <Button
+           ref={buttonRef}
+@@ -81,7 +80,6 @@ const ChatSettings = () => {
+         </Button>
+       </PopoverTrigger>
+-      <PopoverContent className="w-[260px] p-4">
+         <ChatModelSelector />
+         <Separator className="my-4" />
+         <Label className="mb-1 text-xs font-medium">Temperature</Label>
+         <ChatTemperatureSlider />
+       </PopoverContent>
+-    </Popover>
+   )
+ }
