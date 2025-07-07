@@ -1,0 +1,10 @@
+@@ -165,7 +165,8 @@
+ }
+ 
+ return (
+-  <>
++  <>
+     <div className="flex flex-col flex-wrap justify-center gap-2">
+       <ChatFilesDisplay />
++    </>
+   );

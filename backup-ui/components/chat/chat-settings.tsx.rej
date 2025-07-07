@@ -1,0 +1,10 @@
+@@ -67,7 +67,8 @@
+ const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)
+ 
+ return (
+-  <Popover>
++  <>
++    <Popover>
+       <PopoverTrigger>
+         <Button ref={buttonRef}>
+           Settings
