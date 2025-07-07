@@ -1,48 +1,53 @@
-import { Content } from "@builder.io/sdk-react"
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+// src/pages/builder.tsx
+
+import { BuilderComponent } from "@builder.io/react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   initializeBuilder,
   getBuilderContent,
   isPreviewMode,
   isEditingMode
-} from "../lib/builder-config"
-import "../builder-registry" // Import to register components
+} from "../lib/builder-config";
 
-// Initialize Builder.io
-initializeBuilder()
+import { registerAllBuilderComponents } from "../builder-registry";
+registerAllBuilderComponents();
+initializeBuilder();
 
 export default function BuilderPage() {
-  const [content, setContent] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const location = useLocation()
+  const [content, setContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchContent() {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
 
-      // Use the current path for Builder.io routing
-      const urlPath = location.pathname === "/builder" ? "/" : location.pathname
-      const searchParams = new URLSearchParams(location.search)
+      const urlPath = location.pathname === "/builder" ? "/" : location.pathname;
+      const searchParams = new URLSearchParams(location.search);
 
       const { content, error } = await getBuilderContent("page", {
         url: urlPath,
         preview: searchParams.get("builder.preview") || undefined
-      })
+      });
 
       if (error) {
-        setError(error.message)
+        setError(error.message);
       } else {
-        setContent(content)
+        setContent(content);
       }
 
-      setLoading(false)
+      setLoading(false);
     }
 
-    fetchContent()
-  }, [location.pathname, location.search])
+    fetchContent();
+  }, [location.pathname, location.search]);
+
+  const searchParams = new URLSearchParams(location.search);
+  const showContent =
+    content || isPreviewMode(searchParams) || isEditingMode(searchParams);
 
   if (loading) {
     return (
@@ -52,7 +57,7 @@ export default function BuilderPage() {
           <p className="text-gray-300">Loading Builder content...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -77,13 +82,8 @@ export default function BuilderPage() {
           </p>
         </div>
       </div>
-    )
+    );
   }
-
-  // Check if we should show content (content exists OR we're in preview/editing mode)
-  const searchParams = new URLSearchParams(location.search)
-  const showContent =
-    content || isPreviewMode(searchParams) || isEditingMode(searchParams)
 
   if (!showContent) {
     return (
@@ -117,20 +117,12 @@ export default function BuilderPage() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-black">
-      <Content
-        model="page"
-        content={content}
-        apiKey={import.meta.env.VITE_BUILDER_API_KEY}
-        options={{
-          includeRefs: true,
-          noTrack: import.meta.env.DEV
-        }}
-      />
+      <BuilderComponent model="page" content={content} />
     </div>
-  )
+  );
 }
