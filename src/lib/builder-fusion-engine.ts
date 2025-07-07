@@ -1,4 +1,5 @@
-import { builder } from "@builder.io/sdk-react"
+import { builder } from "@builder.io/react"
+
 import {
   BUILDER_CONFIG,
   getBuilderContent,
