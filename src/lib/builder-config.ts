@@ -1,8 +1,6 @@
-import { builder } from "@builder.io/react"; // ✅ Correct SDK for React
+// ✅ Use correct Builder SDK for React
+import { builder } from "@builder.io/react";
 
-/**
- * Builder.io configuration
- */
 export const BUILDER_CONFIG = {
   apiKey: import.meta.env.VITE_BUILDER_API_KEY || "",
   preview: {
@@ -11,17 +9,11 @@ export const BUILDER_CONFIG = {
 };
 
 /**
- * Initialize Builder.io
+ * Initialize the Builder SDK with your API key
  */
-export function initializeBuilder(): boolean {
-  if (!BUILDER_CONFIG.apiKey) {
-    console.warn("❌ Builder.io API key missing.");
-    return false;
-  }
-
+export function initializeBuilder() {
   builder.init(BUILDER_CONFIG.apiKey);
   builder.canTrack = !import.meta.env.DEV;
-  return true;
 }
 
 /**
@@ -58,3 +50,15 @@ export async function getBuilderContent(
     return { content: null, error: error as Error };
   }
 }
+
+/**
+ * Are we previewing this page in Builder’s preview mode?
+ */
+export const isPreviewMode = (params: URLSearchParams) =>
+  params.get("builder.preview") === "true";
+
+/**
+ * Are we inside Builder’s visual editor?
+ */
+export const isEditingMode = () =>
+  typeof window !== "undefined" && (window as any).Builder?.editing === true;
